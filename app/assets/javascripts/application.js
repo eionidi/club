@@ -14,3 +14,9 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+$(function(){
+  $('#review-button').click(function(){
+    $('#review-form').slideToggle(300);
+    return false;
+  });
+});

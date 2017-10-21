@@ -1,0 +1,62 @@
+<div class="book-header text-center">
+  <h1 class="title-medium">
+    <%= @book.name %>
+  </h1>
+
+  <div class="book-image-div">
+    <%= image_tag book_avatar(@book), class: 'book-image', alt: '[Фото]' %>
+  </div>
+
+  <h2 class="title-small buffer-both">
+    <%= @book.author %>
+  </h2>
+
+  <!-- <div class="book-review-button container text-center">
+    <%#Используем встроенный в rails хелпер link_to%>
+    <%= link_to "Add review", '', class: 'button button-light', id: 'review-button' %>
+  </div> -->
+</div>
+
+<div class="book-discription-div">
+    <%=  %>
+</div>
+
+<%#Блок с формой для написания ревью%>
+<div class="book-review-form-div column-1-4 column-1-4-right" id='review-form'>
+  <div class="book-review-form buffer-both">
+    <div class="form">
+      <%#Мы используем хелпер form_for, принимающий на вход блок erb-кода, в котором доступна%>
+      <%#переменная f, содержащая так называемый form builder, с помощью которого можно делать%>
+      <%#поля формы для нового вопроса%>
+      <%= form_for @new_review do |f| %>
+          <%#С помощью объекта для создания полей формы, связанной с моделью @new_review%>
+          <%#Мы создаем инпуты с нужными полями для формы, значения будут подставлены rails%>
+          <%#автоматически%>
+          <%= f.hidden_field :user_id %>
+          <%= f.hidden_field :book_id %>
+
+          <div class="form-field">
+            <%= f.label "Review", class: 'form-label' %>
+            <%= f.text_area :text, class: 'form-textarea' %>
+          </div>
+
+
+          <div class="form-action">
+            <%= submit_tag 'Add Review', class: 'button button-light button-dark', id: 'review-button' %>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%#Блок со списком ревью к книге%>
+<div class="column-3-4">
+  <div class="book-reviews buffer-both">
+    <div class="reviews-list">
+      <% @reviews.each do |review| %>
+          <%= render partial: 'reviews/review', object: review %>
+      <% end %>
+    </div>
+  </div>
+</div>
+

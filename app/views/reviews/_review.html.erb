@@ -1,0 +1,17 @@
+<div class="review">
+  <div class="review-content">
+    <div class="review-text text-lead">
+      <%= review.text %>
+    </div>
+
+    <%# if review.answer.present? %>
+        <div class="review-answer text-lead">
+          <%#= review.answer if review.answer.present? %>
+        </div>
+    <%# end %>
+
+    <div class="review-date">
+      <%= review.created_at.strftime('%d %b %M:%H') %>
+    </div>
+  </div>
+</div>
