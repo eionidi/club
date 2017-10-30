@@ -1,37 +1,67 @@
 class UsersController < ApplicationController
+  # инициализируем объект юзера для экшенов кроме :index, :create, :new
+  before_action :load_user, except: [:index, :create, :new]
+
+  # проверяем имеет ли юзер доступ к экшену
+  before_action :authorize_user, except: [:index, :new, :create, :show]
+
+  # Это действие отзывается, когда пользователь заходит по адресу
+  # /users
   def index
-    @user = [
-      User.new(
-        id: 1,
-        name: 'Kate',
-        email: 'cat81.06@mail.ru'
-      ),
-      User.new(
-        id: 2,
-        name: 'Boom',
-        email: 'boommail'
-      )
-    ]
+    @users = User.all
   end
 
   def new
+    redirect_to root_url, alert: 'Вы уже залогинены' if current_user.present?
+    @user = User.new
+  end
+
+  def create
+    redirect_to root_url, alert: 'Вы уже залогинены' if current_user.present?
+
+    @user = User.new(user_params)
+
+    if @user.save
+      redirect_to root_url, notice: 'Пользователь успешно зарегестрирован!'
+    else
+      render 'new'
+    end
   end
 
   def edit
   end
 
+  def update
+    if @user.update(user_params)
+      redirect_to user_path(@user), notice: 'Данные обновлены'
+    else
+      render 'edit'
+    end
+  end
+
+  # Это действие отзывается, когда пользователь заходит по адресу
+  # /users/:id, например /users/1
   def show
-    @user = User.new(
-      name: 'Kate',
-      email: 'cat81.06@mail.ru'
-    )
+    @reviews = @user.reviews.order(created_at: :desc)
 
-    # @reviews = [
-    #   Review.new(text: 'Exellent!', created_at: Date.parse('4.10.2017')),
-    #   Review.new(text: 'Good', created_at: Date.parse('4.10.2017')),
-    # ]
+    @new_review = @user.reviews.build
+  end
 
-    # Болванка для нового ревью
-    # @new_review = Review.new
+  private
+
+  # если загруженный из базы юзер и текущий залогиненный не совпадают - посылаем его
+  def authorize_user
+    reject_user unless @user == current_user
+  end
+
+  # загружаем из базы запрошенного юзера
+  def load_user
+    @user ||= User.find params[:id]
+  end
+
+  # явно задаем список разрешенных параметров для модели user
+  def user_params
+    params.require(:user).permit(:email, :password, :password_confirmation,
+                                 :name, :username)
   end
 end

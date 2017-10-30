@@ -1,0 +1,31 @@
+<!-- Форма для создания/правки ревью -->
+
+<div class="form">
+  <!-- Форма для объекта @review -->
+  <%= form_for(@review) do |f| %>
+    <% if @review.errors.any? %>
+      <div class="form-errors">
+        <ul>
+          <% @review.errors.full_messages.each do |message| %>
+            <li class="form-error-message"><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <!-- Скрытое поле - айдишник книги, кому задается вопрос -->
+    <%= f.hidden_field :book_id %>
+
+    <div class="form-field">
+      <%= f.label :text, 'Review', class: 'form-label' %>
+      <%= f.text_area :text, class: 'form-textarea' %>
+    </div>
+
+    <div class="form-action buffer-both">
+      <%= f.submit 'Сохранить', class: 'button button-dark button-small' %>
+      или
+      <%= link_to "вернуться", user_path(@review.user) %>
+    </div>
+  <% end %>
+</div>
+

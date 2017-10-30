@@ -10,7 +10,7 @@
 }
 
 .button-dark {
-  background: #2e2f41;
+  background: black;
   color: #fff;
 }
 
@@ -20,7 +20,7 @@
 }
 
 .button-light {
-  background: black;
+  background: grey;
   color: #fff;
 }
 

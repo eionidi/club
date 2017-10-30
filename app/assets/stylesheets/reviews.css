@@ -1,43 +1,39 @@
-.questions-list {
+.reviews-list {
   padding: 10px 0;
 }
 
-.question {
+.review {
   background: white;
 }
 
-.question-content {
+.review-content {
   padding: 10px 15px;
 }
 
-.question + .question {
+.review + .review {
   margin-top: 10px;
 }
 
-.question-text,
-.question-answer {
+.review-text {
   margin-bottom: 10px;
 }
 
-.question-text {
+.review-text {
   color: #005a55;
 }
 
-.question-answer {
-}
-
-.question-date {
+.review-date {
   color: #a0a0a0;
   font-size: 12px;
 }
 
-.question-actions {
+.review-actions {
   font-size: 20px;
   border-top: 1px solid #D9E6E5;
   text-align: right;
   padding: 10px 15px;
 }
 
-.question-actions a {
+.review-actions a {
   margin-left: 10px;
 }

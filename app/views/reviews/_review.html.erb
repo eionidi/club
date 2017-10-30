@@ -1,17 +1,27 @@
+<!-- Локальная переменная этого паршиала -->
+<% review ||= nil %>
+<!-- Определяем какая будет иконка -->
+<% action_icon = review.blank? ? 'reply' : 'pencil' %>
+
+
 <div class="review">
   <div class="review-content">
     <div class="review-text text-lead">
       <%= review.text %>
     </div>
 
-    <%# if review.answer.present? %>
-        <div class="review-answer text-lead">
-          <%#= review.answer if review.answer.present? %>
-        </div>
-    <%# end %>
-
     <div class="review-date">
-      <%= review.created_at.strftime('%d %b %M:%H') %>
+      <!-- Локализованный вывод даты ревью в коротком формате -->
+      <%= l(review.created_at, format: :short) %>
     </div>
   </div>
+
+  <!-- Простая авторизация: только владелец ревью может его редактировать -->
+  <% if review.user == current_user %>
+      <div class="review-actions">
+        <%= link_to fa_icon(action_icon), edit_review_path(review) %>
+        <%= link_to fa_icon('trash-o'), review_path(review),
+                    method: :delete, data: {confirm: 'Удалить ревью?'} %>
+      </div>
+  <% end %>
 </div>
